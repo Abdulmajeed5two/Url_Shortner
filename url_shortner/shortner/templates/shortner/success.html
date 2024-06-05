@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortened</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .short-url {
+            font-size: 1.2em;
+            color: #333;
+            margin: 1em 0;
+        }
+        .copy-button {
+            display: inline-block;
+            padding: 0.5em 1em;
+            border: none;
+            background-color: #9c9ea0;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: #292a2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Shortened</h1>
+        <p>Your shortened URL is:</p>
+        <input type="text" id="shortUrl" class="short-url" value="{{ request.scheme }}://{{ request.get_host }}/{{ short_url }}" readonly>
+        <button class="copy-button" onclick="copyToClipboard()">Copy Link</button>
+        <p id="copyMessage" style="display:none; color:green;">Link copied to clipboard!</p>
+        <a href="/">Shorten another URL</a>
+    </div>
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("shortUrl");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            document.getElementById("copyMessage").style.display = "block";
+            setTimeout(function() {
+                document.getElementById("copyMessage").style.display = "none";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
